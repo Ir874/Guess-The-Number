@@ -3,13 +3,13 @@ from time import sleep
 
 # Computer picks a number
 compick = random.randrange(0,25)
-
+starting_hint = random.randrange(0,25)
 # Main game loop
 guessed = False
 score  = 100
 guesses = 0
 sleep(0.5)
-print("You will have 5 guesses to guess the number from 1-25. Each consecutive guess will reduce your score by 20. You can ask for a hint by saying \"42\". Hints reduce your score by 10. ")
+print("You will have 5 guesses to guess the number from 1-25. Each consecutive guess will reduce your score by 20. You can ask for a hint by saying \"42\". Hints reduce your score by 10. Once the score reaches 0, the game ends. We will give you 1 free hint. ")
 sleep(2)
 print(f"Your score is {score}")
 
@@ -20,21 +20,24 @@ def hintfunc(ug):
         cpover = (compick - cprand)
         cpunder = (compick + cprand)
         if hinttype == 1 and type(ug) == int:
-            print(f"The number is over {cpover}")
+            print(f"HINT: The number is over {cpover}")
 
         elif hinttype == 2 and type(ug) == int:
-            print(f"The number is under {cpunder}")
+            print(f"HINT: The number is under {cpunder}")
         
         elif hinttype == 3 or 4 and type(ug) == int:
             if (compick%2) == 0: # Returns remainder: if its 0, the number is even 
                 sleep(0.5)
-                print(f"The number is an even number")
+                print(f"HINT: The number is an even number")
 
             elif (compick%2) > 0: # Returns remainder: if its greater than 0, the number is odd
                 sleep(0.5)
-                print(f"The number is an odd number")
+                print(f"HINT: The number is an odd number")
 
-
+modeinp = input("Would you like a starting hint for free? ")
+if modeinp == "yes":
+	hintfunc(starting_hint)
+else: print("Ok, starting without hint: ")
 
 while guessed == False:
     #print(compick)
@@ -42,7 +45,7 @@ while guessed == False:
 
     if int(userguess) == compick:
         sleep(0.5)
-        print(f"Good Job! Your score is {score}")
+        print(f"Good Job! You guessed the number! Your score is {score}")
         guessed == True
         break
 

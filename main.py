@@ -3,13 +3,16 @@ from time import sleep
 
 # Computer picks a number
 compick = random.randrange(0,25)
-starting_hint = random.randrange(0,25)
 # Main game loop
 guessed = False
 score  = 100
 guesses = 0
 sleep(0.5)
-print("You will have 5 guesses to guess the number from 1-25. Each consecutive guess will reduce your score by 20. You can ask for a hint by saying \"42\". Hints reduce your score by 10. Once the score reaches 0, the game ends. We will give you 1 free hint. ")
+gamemode = input("Would you like to play in regular or hard mode? (r/h)")
+if gamemode == "r":
+    print("You will have 5 guesses to guess the number from 1-25. Each consecutive incorrect guess will reduce your score by 10 and give you a hint. Once the score reaches 0, the game ends.")
+elif gamemode == "h":
+    print("You will have 5 guesses to guess the number from 1-25. Each consecutive incorrect guess will reduce your score by 10. Once the score reaches 0, the game ends."
 sleep(2)
 print(f"Your score is {score}")
 
@@ -34,10 +37,8 @@ def hintfunc(ug):
                 sleep(0.5)
                 print(f"HINT: The number is an odd number")
 
-modeinp = input("Would you like a starting hint for free? ")
-if modeinp == "yes":
-	hintfunc(starting_hint)
-else: print("Ok, starting without hint: ")
+
+
 
 while guessed == False:
     #print(compick)
@@ -49,17 +50,15 @@ while guessed == False:
         guessed == True
         break
 
-    elif int(userguess) == 42:
-        sleep(0.5)
-        hintfunc(userguess)
-        score -= 10
-        print(f"Your score is {score}")
-
     elif int(userguess) != compick:
         sleep(0.5)
         print("Oops, wrong number, try again")
         sleep(0.5)
-        score -= 20
+        if gamemode == "r":
+            hintfunc(userguess)
+            score -=10
+        elif gamemode == "h":
+            score -= 10
         print(f"Your score is {score}")
 
     
